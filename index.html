@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>श्री गुरूदेव हार्डवेअर - Bill of Supply</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&family=Times+New+Roman&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Devanagari', 'Times New Roman', serif;
+            background: #e8e8e8;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .page-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-panel h2 {
+            color: #f0c040;
+            font-size: 18px;
+            font-family: 'Noto Sans Devanagari', sans-serif;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Noto Sans Devanagari', sans-serif;
+        }
+
+        .btn-primary {
+            background: #f0c040;
+            color: #1a1a2e;
+        }
+
+        .btn-primary:hover {
+            background: #e0b030;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #2d5a27;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #3a7a33;
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: #c0392b;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #e74c3c;
+        }
+
+        /* Bill Container */
+        #bill-container {
+            background: #fff;
+            border: 2px solid #333;
+            padding: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .bill-inner {
+            padding: 16px 20px;
+            font-size: 13px;
+        }
+
+        /* Header Section */
+        .header-top {
+            padding-bottom: 6px;
+        }
+        .court-line {
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: -10px;
+        }
+        .shop-name {
+            text-align: center;
+            font-size: 34px;
+            font-weight: 900;
+            color: #000;
+            margin-bottom: 4px;
+            font-family: 'Noto Sans Devanagari', serif;
+            text-shadow: 0.5px 0.5px 0px #000;
+        }
+        .shop-address {
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: #000;
+        }
+        .seller-line {
+            text-align: center;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 4px 0;
+            border-top: 1px solid #000;
+            color: #000;
+        }
+        .gstn-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: bold;
+            border-top: 1px solid #000;
+            border-bottom: 1px solid #000;
+            padding: 4px 0;
+            margin-bottom: 0;
+        }
+        .bill-type-header {
+            text-align: center;
+            font-size: 15px;
+            font-weight: 900;
+            padding: 4px 0 0px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #000;
+        }
+        .bill-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            font-size: 13px;
+            font-weight: bold;
+            border-bottom: 1px solid #000;
+        }
+        .composition-text {
+            font-size: 12px;
+            font-weight: bold;
+            color: #000;
+        }
+        /* Farmer Info */
+        .farmer-section {
+            padding: 6px 0 6px;
+            border-bottom: 1px solid #000;
+        }
+        .farmer-section .info-line {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        /* Editable fields */
+        .editable {
+            border: none;
+            border-bottom: 1px dashed #999;
+            background: transparent;
+            font-size: 12.5px;
+            font-family: 'Noto Sans Devanagari', serif;
+            color: #000;
+            outline: none;
+            min-width: 80px;
+        }
+
+        .editable:focus {
+            border-bottom: 1.5px solid #1a1a2e;
+            background: #fffbe6;
+        }
+
+        input[type="date"].editable {
+            font-size: 12px;
+        }
+
+        /* Table */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 6px;
+            font-size: 12px;
+        }
+
+        .items-table th {
+            background: #f5f5f5;
+            border: 1px solid #000;
+            padding: 5px 4px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 11.5px;
+            vertical-align: middle;
+            line-height: 1.3;
+        }
+
+        .items-table td {
+            border: 1px solid #000;
+            padding: 3px 2px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .items-table td:nth-child(2) {
+            text-align: left;
+            padding-left: 6px;
+        }
+
+        .items-table td input {
+            border: none;
+            background: transparent;
+            font-size: 12px;
+            font-family: 'Noto Sans Devanagari', serif;
+            text-align: center;
+            width: 100%;
+            outline: none;
+            color: #000;
+            padding: 0;
+        }
+
+        .items-table td input:focus {
+            background: #fffbe6;
+        }
+
+        .items-table td:nth-child(2) input {
+            text-align: left;
+        }
+
+        .items-table .amount-col {
+            font-weight: 600;
+        }
+
+        .no-print-col {
+            width: 28px;
+        }
+
+
+
+        /* Footer */
+        .bill-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 70px;
+            padding-top: 10px;
+            font-size: 12px;
+            border-top: none;
+        }
+
+        .footer-left {
+            font-weight: 600;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .footer-right .shop-name-sm {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .footer-right .address-sm {
+            font-size: 11px;
+            color: #444;
+        }
+
+        /* Add/Remove row button in table */
+        .add-row-btn {
+            background: #2d5a27;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+
+        .remove-row-btn {
+            background: #c0392b;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            width: 20px;
+            height: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        /* Print / PDF styles */
+        @media print {
+            @page {
+                margin: 0; /* Removes browser header/footer (URL, date, page number) */
+            }
+            body {
+                background: white;
+                padding: 10mm; /* Add padding so it doesn't touch paper edges */
+            }
+
+            .control-panel {
+                display: none;
+            }
+
+            .no-print-col,
+            .remove-row-btn,
+            .add-row-btn {
+                display: none !important;
+            }
+
+            #bill-container {
+                box-shadow: none;
+                border: 2px solid #000;
+            }
+
+            .editable {
+                border-bottom: none;
+            }
+
+            .items-table td input {
+                border: none;
+                background: transparent;
+            }
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <h2>🧾 श्री गुरूदेव हार्डवेअर — Bill Generator</h2>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="addItemRow()">+ आयटम जोडा</button>
+                <button class="btn btn-primary" onclick="window.print()" style="background: #2980b9; color: white;">🖨️ Print</button>
+                <button class="btn btn-danger" onclick="resetBill()">🔄 Reset</button>
+            </div>
+        </div>
+
+        <!-- Bill -->
+        <div id="bill-container">
+            <div class="bill-inner">
+
+                <!-- Header -->
+                <div class="header-top">
+                    <div class="court-line">सिल्लोड &nbsp;&nbsp; न्यायालय अंतर्गत</div>
+                    <div class="shop-name">श्री गुरूदेव हार्डवेअर</div>
+                    <div class="shop-address">
+                        मु.पो. सिल्लोड ता.सिल्लोड जि.छत्रपती संभाजीनगर &nbsp; मो.नं
+                        <input class="editable" id="mobile" value="9765868388" style="width:100px; font-weight: bold;">
+                    </div>
+                </div>
+                <div class="seller-line">
+                    विक्रेता : &nbsp;
+                    <input class="editable" id="seller" value="नमता ॲग्रो इंडस्ट्रीज प्रा. ली (पिंपळगाव रे)"
+                        style="width:300px; font-weight: bold;">
+                </div>
+
+                <!-- GSTN Row -->
+                <div class="gstn-row">
+                    <span>MB NO: <input class="editable" id="mb" value="9765868388" style="width:90px; font-weight: bold;"></span>
+                    <span style="text-align:center">GSTN NO : <input class="editable" id="gstn" value="27FIJPB7693N1ZF"
+                            style="width:130px; font-weight: bold;"></span>
+                    <span style="text-align:right">STATE:- <input class="editable" id="state" value="27 MAHARASHTRA"
+                            style="width:120px; font-weight: bold;"></span>
+                </div>
+
+                <!-- Bill Type -->
+                <div class="bill-type-header">BILL OF SUPPLY</div>
+
+                <!-- Bill Meta -->
+                <div class="bill-meta-row">
+                    <span>बिल नं- &nbsp;<input class="editable" id="bill-no" value="" style="width:50px; font-weight: bold;"></span>
+                    <span class="composition-text">Under Composition scheme</span>
+                    <span>दिनांक: &nbsp;<input type="date" class="editable" id="bill-date" value="" style="font-weight: bold;"></span>
+                </div>
+
+                <!-- Farmer Info -->
+                <div class="farmer-section">
+                    <div class="info-line">
+                        शेतकऱ्याचे नाव :-
+                        <input class="editable" id="farmer-name" value="" style="width:250px; font-weight: bold;">
+                    </div>
+                    <div class="info-line">
+                        गाव :-
+                        <input class="editable" id="village" value="" style="width:80px; font-weight: bold;">
+                        &nbsp; ता.
+                        <input class="editable" id="taluka" value="" style="width:70px; font-weight: bold;">
+                        &nbsp; जिल्हा :
+                        <input class="editable" id="district" value="" style="width:160px; font-weight: bold;">
+                    </div>
+                    <div class="info-line">
+                        पिकाचे नांव :
+                        <input class="editable" id="crop" value="" style="width:80px; font-weight: bold;">
+                        &nbsp; गट न:
+                        <input class="editable" id="gat" value="" style="width:40px; font-weight: bold;">
+                        &nbsp; क्षेत्र:
+                        <input class="editable" id="area" value="" style="width:40px; font-weight: bold;">
+                        &nbsp; लागवडीचे अंतर :
+                        <input class="editable" id="spacing" value="" style="width:80px; font-weight: bold;">
+                    </div>
+                </div>
+
+                <!-- Items Table -->
+                <table class="items-table" id="items-table">
+                    <thead>
+                        <tr>
+                            <th style="width:30px">अ.क्र</th>
+                            <th>सूक्ष्म सिंचन संच घटक / साहित्याचा प्रकार</th>
+                            <th style="width:55px">बॅच नंबर</th>
+                            <th style="width:85px">सीएमएल नंबर</th>
+                            <th style="width:65px">आकार</th>
+                            <th style="width:55px">मी./संख्या</th>
+                            <th style="width:70px">कंपनीने शासनास सादर केलेले दर</th>
+                            <th style="width:65px">प्रत्यक्ष दर</th>
+                            <th style="width:75px">रक्कम</th>
+                            <th class="no-print-col" style="width:28px"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="items-body">
+                        <!-- rows added by JS -->
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="7" rowspan="4" style="text-align:left; vertical-align:top; font-weight:bold; padding:8px;">
+                                अक्षरी रुपये : <input class="editable" id="amount-words" value="" style="width:340px; font-weight:bold;">
+                            </td>
+                            <td style="font-weight:bold; text-align:right;">एकूण:-</td>
+                            <td id="subtotal-display" style="font-weight:bold; text-align:right;">0.00</td>
+                            <td class="no-print-col"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold; text-align:right; padding: 2px 4px; white-space: nowrap;">CGST <input class="editable" id="cgst-pct" value="0" style="width:25px; font-weight:bold; text-align:center;">%</td>
+                            <td id="cgst-display" style="font-weight:bold; text-align:right; padding: 2px 4px;">0.00</td>
+                            <td class="no-print-col"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold; text-align:right; padding: 2px 4px; white-space: nowrap;">SGST <input class="editable" id="sgst-pct" value="0" style="width:25px; font-weight:bold; text-align:center;">%</td>
+                            <td id="sgst-display" style="font-weight:bold; text-align:right; padding: 2px 4px;">0.00</td>
+                            <td class="no-print-col"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold; text-align:right;">बिल रक्कम:</td>
+                            <td id="total-display" style="font-weight:bold; text-align:right;">0.00</td>
+                            <td class="no-print-col"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <button class="add-row-btn" onclick="addItemRow()">+ नवीन आयटम</button>
+
+                <!-- Footer -->
+                <div class="bill-footer">
+                    <div class="footer-left">शेतकऱ्याचे नाव व सही</div>
+                    <div class="footer-right">
+                        <div class="shop-name-sm">श्री गुरूदेव हार्डवेअर</div>
+                        <div class="address-sm">मु.पो. सिल्लोड ता.सिल्लोड जि.छत्रपती संभाजीनगर</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ── Default items ──────────────────────────────────────────────────────────────
+        const defaultItems = Array.from({ length: 15 }, () => ({
+            name: "", vach: "", cml: "", size: "", qty: "", govt: "", actual: ""
+        }));
+
+        let rowCounter = 0;
+
+        function createRow(data = {}) {
+            rowCounter++;
+            const sr = rowCounter;
+            const tbody = document.getElementById('items-body');
+            const tr = document.createElement('tr');
+            tr.id = 'row-' + sr;
+            tr.innerHTML = `
+    <td>${sr}</td>
+    <td><input type="text" value="${data.name || ''}" oninput="calcRow(${sr})"></td>
+    <td><input type="text" value="${data.vach || ''}" style="width:50px"></td>
+    <td><input type="text" value="${data.cml || ''}" style="width:80px"></td>
+    <td><input type="text" value="${data.size || ''}" style="width:60px"></td>
+    <td><input type="number" value="${data.qty || ''}" step="any" oninput="calcRow(${sr})" style="width:55px"></td>
+    <td><input type="number" value="${data.govt || ''}" step="any" oninput="calcRow(${sr})" style="width:65px"></td>
+    <td><input type="number" value="${data.actual || ''}" step="any" oninput="calcRow(${sr})" style="width:60px"></td>
+    <td class="amount-col" id="amt-${sr}">0.00</td>
+    <td class="no-print-col"><button class="remove-row-btn" onclick="removeRow(${sr})">×</button></td>
+  `;
+            tbody.appendChild(tr);
+            calcRow(sr);
+        }
+
+        function addItemRow() { createRow(); }
+
+        function removeRow(sr) {
+            const row = document.getElementById('row-' + sr);
+            if (row) row.remove();
+            calcTotal();
+        }
+
+        function getVal(id) { return parseFloat(document.getElementById(id)?.value) || 0; }
+
+        function calcRow(sr) {
+            const row = document.getElementById('row-' + sr);
+            if (!row) return;
+            const inputs = row.querySelectorAll('input[type="number"]');
+            const qty = parseFloat(inputs[0]?.value) || 0;
+            const actual = parseFloat(inputs[2]?.value) || 0;
+            const amt = qty * actual;
+            document.getElementById('amt-' + sr).textContent = amt.toFixed(2);
+            calcTotal();
+        }
+
+        function calcTotal() {
+            let subtotal = 0;
+            document.querySelectorAll('[id^="amt-"]').forEach(cell => {
+                subtotal += parseFloat(cell.textContent) || 0;
+            });
+
+            const totalBeforeTax = subtotal;
+
+            const cgstPct = parseFloat(document.getElementById('cgst-pct')?.value) || 0;
+            const sgstPct = parseFloat(document.getElementById('sgst-pct')?.value) || 0;
+
+            // Under Composition scheme — GST usually not added separately (shown as 0)
+            // But if user wants, they can fill pct
+            const cgstAmt = totalBeforeTax * cgstPct / 100;
+            const sgstAmt = totalBeforeTax * sgstPct / 100;
+            const total = totalBeforeTax + cgstAmt + sgstAmt;
+
+            document.getElementById('subtotal-display').textContent = totalBeforeTax.toFixed(2);
+            document.getElementById('cgst-display').textContent = cgstAmt.toFixed(2);
+            document.getElementById('sgst-display').textContent = sgstAmt.toFixed(2);
+            document.getElementById('total-display').textContent = total.toFixed(2);
+
+            // Auto update amount in words
+            document.getElementById('amount-words').value = numberToMarathiWords(Math.round(total));
+        }
+
+        // ── Number to Marathi/Hindi Words ──────────────────────────────────────────────
+        function numberToMarathiWords(n) {
+            if (n === 0) return 'शून्य रुपये मात्र';
+            const ones = ['', 'एक', 'दोन', 'तीन', 'चार', 'पाच', 'सहा', 'सात', 'आठ', 'नऊ', 'दहा', 'अकरा', 'बारा', 'तेरा', 'चौदा', 'पंधरा', 'सोळा', 'सतरा', 'अठरा', 'एकोणीस', 'वीस', 'एकवीस', 'बावीस', 'तेवीस', 'चोवीस', 'पंचवीस', 'सव्वीस', 'सत्तावीस', 'अठ्ठावीस', 'एकोणतीस', 'तीस', 'एकतीस', 'बत्तीस', 'तेहेतीस', 'चौतीस', 'पस्तीस', 'छत्तीस', 'सदतीस', 'अडतीस', 'एकोणचाळीस', 'चाळीस', 'एकेचाळीस', 'बेचाळीस', 'त्रेचाळीस', 'चव्वेचाळीस', 'पंचेचाळीस', 'सेहेचाळीस', 'सत्तेचाळीस', 'अठ्ठेचाळीस', 'एकोणपन्नास', 'पन्नास', 'एक्कावन्न', 'बावन्न', 'त्रेपन्न', 'चोपन्न', 'पंचावन्न', 'छपन्न', 'सत्तावन्न', 'अठ्ठावन्न', 'एकोणसाठ', 'साठ', 'एकसष्ट', 'बासष्ट', 'त्रेसष्ट', 'चौसष्ट', 'पासष्ट', 'सहासष्ट', 'सदुसष्ट', 'अडुसष्ट', 'एकोणसत्तर', 'सत्तर', 'एकाहत्तर', 'बहात्तर', 'त्र्याहत्तर', 'चौऱ्याहत्तर', 'पंचाहत्तर', 'शहात्तर', 'सत्याहत्तर', 'अठ्ठ्याहत्तर', 'एकोणऐंशी', 'ऐंशी', 'एक्याऐंशी', 'ब्याऐंशी', 'त्र्याऐंशी', 'चौऱ्याऐंशी', 'पंच्याऐंशी', 'शहाऐंशी', 'सत्याऐंशी', 'अठ्ठ्याऐंशी', 'एकोणनव्वद', 'नव्वद', 'एक्याण्णव', 'बाण्णव', 'त्र्याण्णव', 'चौऱ्याण्णव', 'पंच्याण्णव', 'शहाण्णव', 'सत्त्याण्णव', 'अठ्ठ्याण्णव', 'नव्याण्णव'];
+
+            function below1000(num) {
+                if (num === 0) return '';
+                if (num < 100) return ones[num];
+                const h = Math.floor(num / 100);
+                const r = num % 100;
+                return ones[h] + ' शे' + (r > 0 ? ' ' + ones[r] : '');
+            }
+
+            let result = '';
+            if (n >= 100000) {
+                const lakh = Math.floor(n / 100000);
+                result += below1000(lakh) + ' लाख ';
+                n %= 100000;
+            }
+            if (n >= 1000) {
+                const hazar = Math.floor(n / 1000);
+                result += below1000(hazar) + ' हजार ';
+                n %= 1000;
+            }
+            if (n > 0) result += below1000(n);
+            return result.trim() + ' रुपये मात्र';
+        }
+
+
+        // ── Reset ──────────────────────────────────────────────────────────────────────
+        function resetBill() {
+            if (!confirm('सर्व बिल रिसेट करायचे आहे का?')) return;
+            document.getElementById('items-body').innerHTML = '';
+            rowCounter = 0;
+            defaultItems.forEach(createRow);
+        }
+
+        // ── Init ───────────────────────────────────────────────────────────────────────
+        defaultItems.forEach(createRow);
+
+        // Re-calc on any pct change
+        ['cgst-pct', 'sgst-pct'].forEach(id => {
+            document.getElementById(id)?.addEventListener('input', calcTotal);
+        });
+    </script>
+</body>
+
+</html>
