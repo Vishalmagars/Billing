@@ -36,8 +36,8 @@
         /* A4 Page */
         #bill-container {
             width: 210mm;
-            height: 237mm; /* Reduced from 297mm to leave ~20% space at bottom */
-            margin: 0 auto;
+            height: 208mm; /* 70% of A4 to allow 10% top and 20% bottom space */
+            margin: 30mm auto; /* 10% top margin (~30mm) */
             background: white;
             padding: 6mm 6mm;
             box-shadow: 0 0 20px rgba(0,0,0,0.15);
@@ -237,8 +237,8 @@
             #bill-container {
                 box-shadow: none;
                 width: 210mm;
-                height: 237mm; /* Leave ~20% space at bottom */
-                margin: 0;
+                height: 208mm; /* 70% height */
+                margin: 30mm 0 0 0; /* 10% top margin */
                 padding: 6mm;
                 page-break-after: avoid;
             }
